@@ -1,0 +1,1 @@
+"use strict";angular.module("triplogApp",[]),angular.module("triplogApp").controller("MainCtrl",["$scope",function(a){a.awesomeThings=["HTML5 Boilerplate","AngularJS","Karma"]}]);
