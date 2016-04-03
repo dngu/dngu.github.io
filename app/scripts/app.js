@@ -9,4 +9,4 @@
  * Main module of the application.
  */
 angular
-  .module('triplogApp', []);
+  .module('triplogApp', ['datamaps']);

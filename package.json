@@ -1,7 +1,10 @@
 {
   "name": "triplog",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular-datamaps": "^0.1.2",
+    "karma": "^0.13.22"
+  },
   "devDependencies": {
     "grunt": "^0.4.1",
     "grunt-autoprefixer": "^0.7.3",
