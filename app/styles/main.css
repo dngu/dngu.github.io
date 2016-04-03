@@ -1,5 +1,5 @@
 /* Space out content a bit */
-body {
+body, html {
   padding-top: 20px;
   padding-bottom: 20px;
   background: #F4F4F4;
@@ -23,12 +23,10 @@ body {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 40px;
-  padding-bottom: 19px;
 }
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
   color: #777;
 }
 
@@ -43,6 +41,34 @@ body {
 .mapdiv {
   text-align: center;
   background-color: #F4F4F4;
-  padding-top: 19px;
   padding-bottom: 0px;
+}
+
+md-content.md-default-theme, md-content {
+  background: #F4F4F4;
+}
+
+input[type="text"] {
+  text-align: center;
+  padding-left: 10px; 
+}
+
+.lead {
+  margin-bottom: 0px;
+}
+
+.datamap {
+  position: relative;
+  display: block;
+  padding-bottom: 0px;
+}
+
+svg:not(:root) {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stat {
+  padding-left:5em;
+  padding-right:5em;
 }
