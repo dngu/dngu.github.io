@@ -1,11 +1,19 @@
 <div class="mapdiv">
   <md-content style="margin: 16px; padding:16px">
     <div layout>
-      <div flex="20" layout layout-align="center center">
+      <div flex="10" layout layout-align="center center">
+        <md-button class="md-fab md-primary" aria-label="Use Android" ng-click="startPlayback()">
+          <md-icon md-svg-src="images/ic_play_arrow_black_24px.svg"></md-icon>
+        </md-button>
+      </div>
+      <div flex="15" layout layout-align="center center">
         <span class="md-body-1">{{displayDate}}</span>
       </div>
-      <md-slider flex min="0" max="180" ng-model="numMonths" aria-label="blue" id="blue-slider" class="md-primary" ng-change="refreshMap(numMonths)" step="3"></md-slider>
-      <div flex="10" layout layout-align="center center"></div>
+      <div flex layout layout-align="center center">
+        <md-slider flex min="0" max="180" ng-model="numMonths" aria-label="blue" id="blue-slider" class="md-primary" ng-change="refreshMap(numMonths)" step="3"></md-slider>
+      </div>
+      <div flex="15" layout layout-align="center center">
+      </div>
     </div>
   </md-content>
   <p>

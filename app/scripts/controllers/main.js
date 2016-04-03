@@ -8,7 +8,7 @@
  * Controller of the triplogApp
  */
 angular.module('triplogApp')
-  .controller('MainCtrl', function ($scope, moment) {
+  .controller('MainCtrl', function ($scope, moment, $timeout) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -979,11 +979,25 @@ angular.module('triplogApp')
 		};
     };
 
-    refreshMap(moment());
+    refreshMap(currentDate);
 
     $scope.refreshMap = function(numMonths) {
     	var filterDate = moment('2005-08-31').add(numMonths, 'months');
     	$scope.displayDate = filterDate.format('MMMM YYYY');
     	refreshMap(filterDate);
+    };
+
+    var increaseNumMonths = function() {
+    	if ($scope.numMonths < 180) {
+    		$scope.numMonths = $scope.numMonths + 3;
+    		$scope.refreshMap($scope.numMonths);
+    		$timeout(increaseNumMonths, 750);
+    	}
+    };
+
+    $scope.startPlayback = function() {
+    	$scope.numMonths = 0;
+    	$scope.refreshMap(0);
+    	$timeout(increaseNumMonths, 750);
     };
   });
