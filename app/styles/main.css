@@ -72,3 +72,5 @@ svg:not(:root) {
   padding-left:5em;
   padding-right:5em;
 }
+
+.md-fab > i{ vertical-align: middle !important; }
