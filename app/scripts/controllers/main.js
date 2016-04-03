@@ -901,9 +901,9 @@ angular.module('triplogApp')
         ['CAF',93],['COD',36],['CZE',77],['CYP',65],['CXR',14],['CRI',31],
         ['CUW',67],['CPV',63],['CUB',40],['SWZ',58],['SYR',96],['SXM',31]];*/
 
-    var totalCountries = 0
-    var totalDays = 0
-    var totalVisits = 0 
+    var totalCountries = 0;
+    var totalDays = 0;
+    var totalVisits = 0; 
 
     var lookupMap = {};
     visitedData.forEach(function(v){
@@ -912,7 +912,7 @@ angular.module('triplogApp')
     		code: v.code,
     		name: v.name,
     		totalVisits: 1 + (curr.totalVisits || 0),
-    		totalDays: v.days + (curr.days || 0)
+    		totalDays: v.days + (curr.totalDays || 0)
     	};
     	totalVisits = totalVisits + 1;
     	totalDays = totalDays + v.days;
@@ -951,7 +951,10 @@ angular.module('triplogApp')
 	  },
 	  geographyConfig: {
 	    highlighBorderColor: '#EAA9A8',
-	    highlighBorderWidth: 2
+	    highlighBorderWidth: 2,
+	    popupTemplate: function(geo) {
+            return '<div class="hoverinfo"><strong>' + geo.properties.name + '<br/>Total Days Visited: ' + lookupMap[geo.id].totalDays + '<br/>Total Visits: ' + lookupMap[geo.id].totalVisits + '</strong></div>';
+        }
 	  },
 	  fills: {
 	    defaultFill: '#C3C4B6',
