@@ -9,4 +9,4 @@
  * Main module of the application.
  */
 angular
-  .module('triplogApp', ['datamaps', 'ngMaterial', 'angularMoment']);
+  .module('triplogApp', ['datamaps', 'ngMaterial', 'angularMoment', 'triplogApp.services']);
