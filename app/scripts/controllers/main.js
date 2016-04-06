@@ -16,10 +16,14 @@ angular.module('triplogApp')
     ];
 
     var visitedData = dataService.getVisitData();
+    var flightData = dataService.getFlightData();
 
     var totalCountries = 0;
     var totalDays = 0;
     var totalVisits = 0; 
+    var totalFlights = 0;
+    var totalMiles = 0;
+    var totalFlightHours = 0;
 
     var startDate = moment('2005-08-31');
     var currentDate = moment();
@@ -27,9 +31,20 @@ angular.module('triplogApp')
     $scope.displayDate = currentDate.format('MMMM YYYY');
     $scope.numMonths = Math.floor(moment.duration(currentDate.diff(startDate)).asMonths());
 
-    visitedData.forEach(function(v) {
-    	v.visited = moment(v.visited, 'DD-MM-YYYY');
-    });
+    var convertAllDates = function(obj, field) {
+    	obj[field] = moment(obj[field], 'DD-MM-YYYY');
+    };
+
+	var calculatePaletteLevel = function (score) {
+	    return 'level' + Math.floor((score - minValue)/maxValue * 5); 
+	};
+
+	var numberWithColumns = function (x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+	};
+
+    visitedData.forEach(function(v) { convertAllDates(v, 'visited'); });
+    flightData.forEach(function(f) { convertAllDates(f, 'flightDate'); });
 
 	var lookupMap = {};
 	var series = [];
@@ -39,14 +54,13 @@ angular.module('triplogApp')
 	var minValue;
 	var maxValue;
 
-	var calculatePaletteLevel = function (score) {
-	    return 'level' + Math.floor((score - minValue)/maxValue * 5); 
-	};
-
     var refreshMap = function(filterDate) {
     	totalCountries = 0;
     	totalDays = 0;
      	totalVisits = 0; 
+     	totalFlights = 0;
+     	totalMiles = 0;
+     	totalFlightHours = 0;
 
     	lookupMap = {};
     	for (var i = 0; i < visitedData.length; i++) {
@@ -64,6 +78,16 @@ angular.module('triplogApp')
 	    	totalVisits = totalVisits + 1;
 	    	totalDays = totalDays + v.days;
     	}
+
+    	for (var j = 0; j < flightData.length; j++) {
+    		var f = flightData[j];
+    		if (f.flightDate.isAfter(filterDate)) {
+    			break;
+    		}
+    		totalMiles = totalMiles + f.miles;
+    		totalFlights = totalFlights + 1;
+    	}
+    	totalFlightHours = Math.floor(totalMiles / 567);
 
 		series = [];
 		for (var key in lookupMap) {
@@ -88,6 +112,9 @@ angular.module('triplogApp')
 		$scope.totalCountries = totalCountries;
 	    $scope.totalDays = totalDays;
 	    $scope.totalVisits = totalVisits;
+	    $scope.totalFlightHours = totalFlightHours;
+	    $scope.totalFlights = totalFlights;
+	    $scope.totalMiles = numberWithColumns(totalMiles);
 
 	    $scope.mapObject = {
 		  scope: 'world',
