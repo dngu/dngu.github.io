@@ -18,18 +18,18 @@ angular.module('triplogApp')
     var visitedData = dataService.getVisitData();
     var flightData = dataService.getFlightData();
 
-    var totalCountries = 0;
-    var totalDays = 0;
-    var totalVisits = 0; 
-    var totalFlights = 0;
-    var totalMiles = 0;
-    var totalFlightHours = 0;
-
-    var startDate = moment('2005-08-31');
-    var currentDate = moment();
-
-    $scope.displayDate = currentDate.format('MMMM YYYY');
-    $scope.numMonths = Math.floor(moment.duration(currentDate.diff(startDate)).asMonths());
+    var createDisplayData = function(nMonths, dDate) {
+        return {
+            totalCountries : 0,
+            totalDays : 0,
+            totalVisits : 0,
+            totalFlights : 0,
+            totalMiles : 0,
+            totalFlightHours : 0,
+            numMonths : nMonths,
+            displayDate : dDate.format('MMMM YYYY')
+        };
+    };
 
     var convertAllDates = function(obj, field) {
     	obj[field] = moment(obj[field], 'DD-MM-YYYY');
@@ -54,13 +54,9 @@ angular.module('triplogApp')
 	var minValue;
 	var maxValue;
 
-    var refreshMap = function(filterDate) {
-    	totalCountries = 0;
-    	totalDays = 0;
-     	totalVisits = 0; 
-     	totalFlights = 0;
-     	totalMiles = 0;
-     	totalFlightHours = 0;
+    var refreshMap = function(numMonths) {
+        var filterDate = moment('2005-08-31').add(numMonths, 'months');
+        var displayData = createDisplayData(numMonths, filterDate);
 
     	lookupMap = {};
     	for (var i = 0; i < visitedData.length; i++) {
@@ -75,8 +71,8 @@ angular.module('triplogApp')
 	    		totalVisits: 1 + (curr.totalVisits || 0),
 	    		totalDays: v.days + (curr.totalDays || 0)
 	    	};
-	    	totalVisits = totalVisits + 1;
-	    	totalDays = totalDays + v.days;
+	    	displayData.totalVisits = displayData.totalVisits + 1;
+	    	displayData.totalDays = displayData.totalDays + v.days;
     	}
 
     	for (var j = 0; j < flightData.length; j++) {
@@ -84,15 +80,15 @@ angular.module('triplogApp')
     		if (f.flightDate.isAfter(filterDate)) {
     			break;
     		}
-    		totalMiles = totalMiles + f.miles;
-    		totalFlights = totalFlights + 1;
+    		displayData.totalMiles = displayData.totalMiles + f.miles;
+    		displayData.totalFlights = displayData.totalFlights + 1;
     	}
-    	totalFlightHours = Math.floor(totalMiles / 567);
+    	displayData.totalFlightHours = Math.floor(displayData.totalMiles / 567);
 
 		series = [];
 		for (var key in lookupMap) {
 		    series.push(lookupMap[key]);
-		    totalCountries = totalCountries + 1;
+		    displayData.totalCountries = displayData.totalCountries + 1;
 		}
 
 		// Datamaps expect data in format:
@@ -109,12 +105,7 @@ angular.module('triplogApp')
 	        dataset[iso] = { fillKey: calculatePaletteLevel(value) };
 	    });
 
-		$scope.totalCountries = totalCountries;
-	    $scope.totalDays = totalDays;
-	    $scope.totalVisits = totalVisits;
-	    $scope.totalFlightHours = totalFlightHours;
-	    $scope.totalFlights = totalFlights;
-	    $scope.totalMiles = numberWithColumns(totalMiles);
+		$scope.data = displayData;
 
 	    $scope.mapObject = {
 		  scope: 'world',
@@ -139,26 +130,31 @@ angular.module('triplogApp')
 		  data: dataset
 		};
     };
+    
+    var startDate = moment('2005-08-31');
+    var currentDate = moment();
+    var currentMonths = Math.floor(moment.duration(currentDate.diff(startDate)).asMonths() / 3) * 3 + 3;
 
-    refreshMap(currentDate);
+    refreshMap(currentMonths);
+
+    $scope.maxMonths = currentMonths;
 
     $scope.refreshMap = function(numMonths) {
-    	var filterDate = moment('2005-08-31').add(numMonths, 'months');
-    	$scope.displayDate = filterDate.format('MMMM YYYY');
-    	refreshMap(filterDate);
+    	refreshMap(numMonths);
     };
 
     var increaseNumMonths = function() {
-    	if ($scope.numMonths < 180) {
-    		$scope.numMonths = $scope.numMonths + 3;
-    		$scope.refreshMap($scope.numMonths);
-    		$timeout(increaseNumMonths, 750);
+    	if ($scope.data.numMonths < $scope.maxMonths) {
+    		refreshMap($scope.data.numMonths + 3);
+    		$timeout(increaseNumMonths, 500);
+    	} else {
+    		$scope.inProgress = false;
     	}
     };
 
     $scope.startPlayback = function() {
-    	$scope.numMonths = 0;
-    	$scope.refreshMap(0);
-    	$timeout(increaseNumMonths, 750);
+    	$scope.inProgress = true;
+    	refreshMap(0);
+    	$timeout(increaseNumMonths, 500);
     };
   });

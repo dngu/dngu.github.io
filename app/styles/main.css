@@ -74,3 +74,9 @@ svg:not(:root) {
 }
 
 .md-fab > i{ vertical-align: middle !important; }
+
+@media only screen and (max-device-width: 480px) {
+  .container {
+    width: 250%;
+  }
+}
