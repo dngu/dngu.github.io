@@ -84,6 +84,7 @@ angular.module('triplogApp')
     		displayData.totalFlights = displayData.totalFlights + 1;
     	}
     	displayData.totalFlightHours = Math.floor(displayData.totalMiles / 567);
+        displayData.totalMiles = Math.floor(displayData.totalMiles / 1000);
 
 		series = [];
 		for (var key in lookupMap) {

@@ -14,16 +14,52 @@
       </div>
     </div>
   </md-content>
-  <div layout="column" layout-xs="row">
-    <div flex layout="row" layout-xs="column">
-        <div flex>TOTAL COUNTRIES VISITED: {{data.totalCountries}}</div>
-        <div flex>TOTAL TRIPS: {{data.totalVisits}}</div>
-        <div flex>TOTAL DAYS TRAVELLED: {{data.totalDays}}</div>
+  <div layout="column" layout-xs="row" layout-sm="row" class="narrow">
+    <div flex layout="row" layout-xs="column" layout-sm="column">
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">public</i></md-icon></div>
+          <div flex>COUNTRIES VISITED:</div>
+          <div flex class="big-number blue">{{data.totalCountries}}</div>
+        </div>
+      </md-card>
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">beenhere</i></md-icon></div>
+          <div flex>TRIPS:</div>
+          <div flex class="big-number blue">{{data.totalVisits}}</div>
+        </div>
+      </md-card>
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">today</i></md-icon></div>
+          <div flex>DAYS TRAVELLED:</div>
+          <div flex class="big-number blue">{{data.totalDays}}</div>
+        </div>
+      </md-card>
     </div>
-    <div flex layout="row" layout-xs="column">
-        <div flex>TOTAL MILES TRAVELLED: {{data.totalMiles}}</div>
-        <div flex>TOTAL FLIGHTS: {{data.totalFlights}}</div>
-        <div flex>TOTAL HOURS ON A PLANE: {{data.totalFlightHours}}</div>
+    <div flex layout="row" layout-xs="column" layout-sm="column">
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">swap_calls</i></md-icon></div>
+          <div flex>AIR MILES ('000):</div>
+          <div flex class="big-number blue">{{data.totalMiles}}</div>
+        </div>
+      </md-card>
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">flight_takeoff</i></md-icon></div>
+          <div flex>FLIGHTS:</div>
+          <div flex class="big-number blue">{{data.totalFlights}}</div>
+        </div>
+      </md-card>
+      <md-card flex>
+        <div flex layout="row" layout-align="centre centre" class="blue-card">
+          <div flex><i class="material-icons big-icon blue">timer</i></md-icon></div>
+          <div flex>HOURS ON A PLANE:</div>
+          <div flex class="big-number blue">{{data.totalFlightHours}}</div>
+        </div>
+      </md-card>
     </div>
   </div>
   <p class="lead">

@@ -80,3 +80,24 @@ svg:not(:root) {
     width: 250%;
   }
 }
+
+.big-icon {
+  font-size: 36px !important;
+}
+
+.big-number {
+  font-size: 24px;
+}
+
+.blue {
+  font-color: rgb(63,81,181);
+}
+
+.blue-card {
+  padding: 7px;
+}
+
+.narrow {
+  margin-left: 100px;
+  margin-right: 100px;
+}
