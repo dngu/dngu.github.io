@@ -39,7 +39,7 @@ angular.module('triplogApp')
 	    return 'level' + Math.floor((score - minValue)/maxValue * 5); 
 	};
 
-	var numberWithColumns = function (x) {
+	var numberWithCommas = function (x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	};
 
@@ -84,6 +84,7 @@ angular.module('triplogApp')
     		displayData.totalFlights = displayData.totalFlights + 1;
     	}
     	displayData.totalFlightHours = Math.floor(displayData.totalMiles / 567);
+        displayData.totalMiles = numberWithCommas(displayData.totalMiles);
 
 		series = [];
 		for (var key in lookupMap) {

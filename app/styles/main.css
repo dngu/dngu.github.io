@@ -68,9 +68,8 @@ svg:not(:root) {
   margin-right: auto;
 }
 
-.stat {
-  padding-left:5em;
-  padding-right:5em;
+.top-stat {
+  margin-bottom: 10px;
 }
 
 .md-fab > i{ vertical-align: middle !important; }
